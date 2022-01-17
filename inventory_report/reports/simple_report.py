@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+
 def get_fab_date(arr):
     expiration = arr[0]['data_de_fabricacao']
     fab_date = datetime.strptime(expiration, '%Y-%m-%d').date()
@@ -11,6 +12,7 @@ def get_fab_date(arr):
             fab_date = format
     return fab_date
 
+
 def get_expiration_date(arr):
     today = date.today()
     expiration = arr[0]['data_de_validade']
@@ -21,6 +23,7 @@ def get_expiration_date(arr):
         if (expiration_date > format > today):
             expiration_date = format
     return expiration_date
+
 
 def get_greater_stock(arr):
     greater_stock = 1
@@ -36,6 +39,7 @@ def get_greater_stock(arr):
             greater_stock = resp
             company = company_i
     return company
+
 
 class SimpleReport:
     def __init__(self):
