@@ -53,7 +53,7 @@ class SimpleReport:
         report = {
             'Data de fabricação mais antiga': fab_date,
             'Data de validade mais próxima': expiration_date,
-            'Empresa com greater_stock quantidade de fabutos estocados': comp
+            'Empresa com maior quantidade de produtos estocados': comp
         }
 
         result = ''
