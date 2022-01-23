@@ -27,18 +27,18 @@ def get_expiration_date(arr):
 
 def get_greater_stock(arr):
     greater_stock = 1
-    company = ''
+    comp = ''
     for i in range(0, len(arr)):
         resp = 1
         for x in range(i+1, len(arr)):
-            company_i = arr[i]['nome_da_empresa']
-            company_x = arr[x]['nome_da_empresa']
-            if company_i == company_x:
+            comp_i = arr[i]['nome_da_empresa']
+            comp_x = arr[x]['nome_da_empresa']
+            if comp_i == comp_x:
                 resp += 1
         if resp > greater_stock:
             greater_stock = resp
-            company = company_i
-    return company
+            comp = comp_i
+    return comp
 
 
 class SimpleReport:
@@ -48,12 +48,12 @@ class SimpleReport:
     def generate(list):
         fab_date = get_fab_date(list)
         expiration_date = get_expiration_date(list)
-        company = get_greater_stock(list)
+        comp = get_greater_stock(list)
 
         report = {
             'Data de fabricação mais antiga': fab_date,
             'Data de validade mais próxima': expiration_date,
-            'Empresa com greater_stock quantidade de fabutos estocados': company
+            'Empresa com greater_stock quantidade de fabutos estocados': comp
         }
 
         result = ''
