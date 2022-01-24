@@ -1,18 +1,10 @@
-from .importer import Importer
-from pathlib import Path
-import json
+from inventory_report.importer.importer import Importer
+from inventory_report.inventory.inventory import json_reader
 
 
 class JsonImporter(Importer):
-    @classmethod
-    def import_data(cls, path):
-        extension = Path(path).suffix
-        result = []
+    def import_data(path):
+        if not path.endswith('.json'):
+            raise ValueError('Arquivo inválido')
 
-        if extension != ".json":
-            raise ValueError("Arquivo inválido")
-        else:
-            with open(path) as file:
-                result = json.load(file)
-
-        return result
+        return json_reader(path)

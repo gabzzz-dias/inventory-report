@@ -1,21 +1,18 @@
-from .importer import Importer
-from pathlib import Path
+from inventory_report.importer.importer import Importer
 import csv
 
 
 class CsvImporter(Importer):
-    @classmethod
-    def import_data(cls, path):
-        extension = Path(path).suffix
-        result = []
+    def import_data(path):
+        extension = path.split('.')[-1]
 
-        if extension != ".csv":
-            raise ValueError("Arquivo inválido")
-        else:
-            with open(path) as file:
-                data = csv.DictReader(file)
+        if extension != 'csv':
+            raise ValueError('Arquivo inválido')
 
-                for i in data:
-                    result.append(i)
+        with open(path) as file:
+            data = csv.DictReader(file, delimiter=",", quotechar='"')
+            result = []
 
+            for i in data:
+                result.append(i)
         return result
