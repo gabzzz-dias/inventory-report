@@ -1,65 +1,53 @@
-from inventory_report.reports.simple_report import SimpleReport
-from inventory_report.reports.complete_report import CompleteReport
-from pathlib import Path
 import csv
 import json
-import xml.etree.ElementTree as ET
-
-
-class Read:
-    @classmethod
-    def reader(cls, path):
-        extension = Path(path).suffix
-        result = ""
-
-        if extension == ".csv":
-            result = cls.csv_reader(path)
-        elif extension == ".json":
-            result = cls.json_reader(path)
-        else:
-            result = cls.xml_reader(path)
-
-        return result
-
-    def xml_reader(data):
-        file = ET.parse(data).getroot()
-        result = []
-
-        for i in file:
-            res = {}
-            for x in i:
-                res[x.tag] = x.text
-            result.append(res)
-
-        return result
-
-    def json_reader(path):
-        with open(path) as json_path:
-            result = json.load(json_path)
-
-        return result
-
-    def csv_reader(path):
-        result = []
-
-        with open(path) as csv_path:
-            data = csv.DictReader(csv_path)
-
-            for i in data:
-                result.append(i)
-
-        return result
+import xml.etree.ElementTree as Et
+from inventory_report.reports.simple_report import SimpleReport
+from inventory_report.reports.complete_report import CompleteReport
 
 
 class Inventory:
     @staticmethod
-    def import_data(path, version):
-        report = Read.reader(path)
-        result = ""
+    def csv_reader(path):
+        with open(path) as file:
 
-        if version == "simples":
-            result = SimpleReport.generate(report)
+            return list(csv.DictReader(file))
+
+    @staticmethod
+    def json_reader(path):
+        with open(path) as file:
+
+            return json.load(file)
+
+    @staticmethod
+    def xml_reader(path):
+        root = Et.parse(path).getroot()
+        resp = []
+        for i in root:
+            res = {}
+            for x in i:
+                res[x.tag] = x.text
+            resp.append(res)
+
+        return resp
+
+    @classmethod
+    def reader(cls, path):
+        if ".csv" in path:
+            return cls.csv_reader(path)
+        elif ".json" in path:
+            return cls.json_reader(path)
+        elif ".xml" in path:
+            return cls.xml_reader(path)
+
+    @classmethod
+    def check_extension(cls, path, extension):
+        if extension not in path:
+            raise ValueError("Arquivo inválido")
+
+    @classmethod
+    def import_data(cls, path, report_type):
+        read_method = cls.reader(path)
+        if report_type == "simples":
+            return SimpleReport.generate(read_method)
         else:
-            result = CompleteReport.generate(report)
-
-        return result
+            return CompleteReport.generate(read_method)
