@@ -4,7 +4,7 @@ from inventory_report.reports.simple_report import SimpleReport
 def get_comps_stock(name, result, comp_arr):
 
     def have_stock(comp):
-        for i in comp.items():
+        for i, x in comp.items():
             if i == name:
                 return comp[i]
 
