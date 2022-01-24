@@ -4,7 +4,8 @@ import csv
 
 
 class CsvImporter(Importer):
-    def import_data(path):
+    @classmethod
+    def import_data(cls, path):
         extension = Path(path).suffix
         result = []
 

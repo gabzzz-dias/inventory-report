@@ -4,7 +4,8 @@ from pathlib import Path
 
 
 class XmlImporter(Importer):
-    def import_data(path):
+    @classmethod
+    def import_data(cls, path):
         extension = Path(path).suffix
 
         if extension != '.xml':
