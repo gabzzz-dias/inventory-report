@@ -42,8 +42,6 @@ def get_greater_stock(arr):
 
 
 class SimpleReport:
-    def __init__(self):
-        pass
 
     def generate(list):
         fab_date = get_fab_date(list)
