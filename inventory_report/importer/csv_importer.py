@@ -3,16 +3,14 @@ import csv
 
 
 class CsvImporter(Importer):
-    def import_data(path):
-        extension = path.split('.')[-1]
-
-        if extension != 'csv':
+    def import_data(file_path):
+        type_file = file_path.split('.')[-1]
+        if type_file != 'csv':
             raise ValueError('Arquivo inválido')
+        with open(file_path) as file:
+            content = csv.DictReader(file, delimiter=",", quotechar='"')
+            list_data = []
 
-        with open(path) as file:
-            data = csv.DictReader(file, delimiter=",", quotechar='"')
-            result = []
-
-            for i in data:
-                result.append(i)
-        return result
+            for item in content:
+                list_data.append(item)
+        return list_data

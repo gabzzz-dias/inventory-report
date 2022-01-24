@@ -3,8 +3,7 @@ from inventory_report.inventory.inventory import json_reader
 
 
 class JsonImporter(Importer):
-    def import_data(path):
-        if not path.endswith('.json'):
+    def import_data(file_path):
+        if not file_path.endswith('.json'):
             raise ValueError('Arquivo inválido')
-
-        return json_reader(path)
+        return json_reader(file_path)

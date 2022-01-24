@@ -3,8 +3,7 @@ from inventory_report.inventory.inventory import xml_reader
 
 
 class XmlImporter(Importer):
-    def import_data(path):
-        if not path.endswith('.xml'):
+    def import_data(file_path):
+        if not file_path.endswith('.xml'):
             raise ValueError('Arquivo inválido')
-
-        return xml_reader(path)
+        return xml_reader(file_path)
